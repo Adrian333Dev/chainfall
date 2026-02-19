@@ -1,0 +1,111 @@
+---
+description: "Chainfall monorepo core rules: structure, naming, TS conventions, workflow guardrails. Always apply."
+globs:
+alwaysApply: true
+---
+
+# Chainfall — Core Rules (Monorepo)
+
+## 0) North Star
+
+- Prefer **simple, readable, boring** solutions that are easy to debug.
+- Do not introduce abstractions unless they remove real duplication or unlock a clear next step.
+- If a change can be done in <50 LOC without a new layer, do that.
+
+---
+
+## 1) Repo layout contract (keep stable)
+
+Target structure (kebab-case only):
+
+.
+├─ apps/
+│ ├─ web-canvas/ # React + Canvas client (v1)
+│ ├─ web-phaser/ # Phaser client (practice)
+│ ├─ web-three/ # Three.js client (practice)
+│ └─ server/ # NestJS API + WS
+├─ packages/
+│ ├─ game-core/ # deterministic pure game logic (no IO)
+│ ├─ protocol/ # shared contracts/schemas/event types
+│ └─ ui/ # optional shared UI bits (only if needed)
+└─ tooling/ # optional scripts/configs (only if needed)
+
+Rules:
+
+- Do not create new top-level folders without a strong reason.
+- UI never imports from server. Shared code goes in `packages/*`.
+- Clients must stay thin renderers; rules/state transitions belong in `packages/game-core`.
+
+---
+
+## 2) Naming + filesystem rules
+
+- All files/folders: **kebab-case**.
+- Keep names **short and self-explaining** (no essay-names).
+- Prefer `thing.service.ts`, `match.gateway.ts`, `game-state.ts`, etc.
+
+---
+
+## 3) TypeScript conventions
+
+- Prefer `interface` over `type` (NOT a hard rule).
+- All interfaces must start with capital `I` (e.g. `IGameState`, `IUserProfile`).
+- Avoid `enum`. Prefer `as const` objects + derived union types.
+- Centralize typed values:
+  - Define `const X = {...} as const`
+  - Derive `type TX = typeof X[keyof typeof X]`
+- Minimal duplication: derive types from values, not repeated string unions.
+
+---
+
+## 4) Utilities + helpers
+
+- Prefer grouping shared utils as **static classes** (readability):
+  - `class TimeUtils { static msToSec(...) {} }`
+- Exception: server-side NestJS “utils” that need DI should be injectable services.
+
+---
+
+## 5) Code organization + file size
+
+- Aim for <500 lines per file. Split by category when it grows.
+- Feature folders should look like:
+  - `index.ts` (barrel exports)
+  - `types.ts` / `constants.ts`
+  - `*.service.ts` / `*.gateway.ts` / `*.controller.ts`
+  - `*.test.ts` where applicable
+
+Index/barrels:
+
+- Each folder should have `index.ts` and use `export * from "./x"`.
+- Avoid circular deps: barrels should export leaf modules, not re-export from other barrels.
+
+---
+
+## 6) Dependency + scaffolding rules
+
+- DO NOT manually edit `package.json` for deps. Use pnpm:
+  - `pnpm add`, `pnpm remove`, `pnpm up`
+- Prefer official CLIs for setup and generators (Nest CLI, Supabase CLI, etc.).
+- Prefer monorepo-wide commands (turbo/pnpm -w) over ad-hoc per-package hacks.
+
+---
+
+## 7) Security + correctness (high-level)
+
+- Treat clients as untrusted. Server must validate every move/action.
+- Keep game logic deterministic and replayable (implemented in `packages/game-core`).
+
+---
+
+## 8) AI VERIFICATION CHECKLIST (before proposing code)
+
+Before you output code/changes, verify:
+
+1. Did you keep the solution minimal (no extra layers)?
+2. Did you follow kebab-case paths + short names?
+3. Interfaces start with `I` and are not duplicated by value-types.
+4. No manual dependency edits (pnpm only).
+5. Shared logic belongs in `packages/*`, not copied across apps.
+
+If any check fails: STOP and fix.

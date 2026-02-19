@@ -1,0 +1,30 @@
+---
+description: "React + Canvas specific rules for Chainfall."
+globs: "apps/web-canvas/**"
+---
+
+# Web Canvas Client (React + Canvas)
+
+## Canvas rendering
+
+- Handle devicePixelRatio to avoid blurry canvas.
+- Prefer “draw on state change” (turn-based) over always-on loops unless animating.
+- Keep drawing code centralized:
+  - `draw(ctx, viewModel)` style
+  - no hidden mutable global state
+
+## Input / hit testing
+
+- Use pointer events (mouse + touch).
+- Keep hit-testing logic simple and deterministic.
+- Prefer a single input controller module over scattered handlers.
+
+## State management
+
+- Prefer `useReducer` for UI state.
+- Introduce external state libs only if necessary.
+
+## AI checklist (web-canvas)
+
+- Don’t sneak rule logic into components.
+- Don’t hardcode strings/constants; import from shared packages.

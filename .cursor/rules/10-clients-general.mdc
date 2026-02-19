@@ -1,0 +1,36 @@
+---
+description: "Client rules for all Chainfall clients (web-canvas, web-phaser, web-three)."
+globs: "apps/web-*/**"
+---
+
+# Chainfall Clients (All Renderers)
+
+## Responsibilities
+
+- Clients are **renderers + input** only.
+- Game rules/state transitions MUST live in `packages/game-core`.
+- Shared message schemas/types MUST live in `packages/protocol`.
+
+## Cross-client consistency
+
+- All clients must:
+  - consume the same server protocol
+  - render the same authoritative state
+  - never re-implement game rules locally
+
+## UI / UX basics
+
+- Prefer simple, obvious UI over clever abstractions.
+- Make controls touch-friendly (mobile considerations apply to all clients).
+
+## Performance basics
+
+- Avoid unnecessary re-renders / redraws.
+- Keep per-frame work minimal (especially for Phaser/Three).
+- Prefer event-driven redraw for turn-based UI when possible.
+
+## AI checklist (clients)
+
+- No rule logic in client.
+- No duplicated constants: import from packages.
+- Keep code readable; avoid overengineering.

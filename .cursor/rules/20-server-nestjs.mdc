@@ -1,0 +1,40 @@
+---
+description: "Server rules for Chainfall: NestJS structure, validation, security, websockets, server-authoritative gameplay."
+globs: "apps/server/**"
+---
+
+# Chainfall Server (NestJS)
+
+## 1) NestJS structure (clean + standard)
+
+- Prefer standard Nest patterns: module -> controller/gateway -> service.
+- Controllers/Gateways: transport only (DTO in/out).
+- Services: orchestration.
+- Game rules: call into `packages/game-core` only.
+
+## 2) Server-authoritative gameplay
+
+- Client requests are intents, not truth.
+- Server validates:
+  - auth/session
+  - match membership
+  - action legality
+  - applies state transition via `game-core`
+  - broadcasts resulting state/events
+
+## 3) Contracts
+
+- All request/response/event shapes must come from `packages/protocol`.
+- No ad-hoc JSON shapes invented inside server code.
+
+## 4) Security guardrails
+
+- Never trust client timers.
+- Rate limit / debounce spammy actions at gateway layer.
+- Log enough to debug disputes (match id, turn, action, result).
+
+## 5) AI checklist (server)
+
+- No business logic in controllers.
+- No game logic re-implemented in server.
+- All shared types come from protocol package.

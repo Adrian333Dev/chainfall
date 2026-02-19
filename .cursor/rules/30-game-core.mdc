@@ -1,0 +1,40 @@
+---
+description: "Game-core rules: deterministic, pure logic, replayable state transitions. No IO."
+globs: "packages/game-core/**"
+---
+
+# Chainfall Game Core (Deterministic Engine)
+
+## 1) Determinism is non-negotiable
+
+- `game-core` must be:
+  - pure-ish (no network, no DB, no DOM, no Date.now)
+  - deterministic (same input => same output)
+  - replayable (actions/event log can rebuild state)
+
+## 2) Single state transition API
+
+Prefer a single entry point style:
+
+- `applyAction(state, action) -> { state, events }`
+  OR
+- `reduce(state, action) -> state` (+ separate event derivation)
+
+Pick one and keep it consistent.
+
+## 3) Data model
+
+- State should be serializable JSON.
+- Avoid classes in state.
+- Centralize constants (board size, countdown limits, scoring) in one place.
+
+## 4) Testing priority
+
+- Unit tests here give the best ROI.
+- Test chain detonations and edge cases thoroughly.
+
+## 5) AI checklist (game-core)
+
+- No IO.
+- No hidden randomness.
+- No “helper logic” duplicated in apps.
