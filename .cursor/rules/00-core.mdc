@@ -49,12 +49,10 @@ Rules:
 ## 3) TypeScript conventions
 
 - Prefer `interface` over `type` (NOT a hard rule).
-- All interfaces must start with capital `I` (e.g. `IGameState`, `IUserProfile`).
+- All interfaces must start with capital `I` (e.g. `IGameState`). Type aliases: no `T` prefix—use concept name (e.g. `Player`, `GameState`).
 - Avoid `enum`. Prefer `as const` objects + derived union types.
-- Centralize typed values:
-  - Define `const X = {...} as const`
-  - Derive `type TX = typeof X[keyof typeof X]`
-- Minimal duplication: derive types from values, not repeated string unions.
+- Centralize typed values: define `const X = {...} as const`, derive type in the **same file** right after (e.g. `type X = ValueOf<typeof X>` or concept name). Use the const everywhere (types, schemas, runtime)—no magic strings for discriminants.
+- Schema naming (Zod): PascalCase, same name for schema and inferred type (e.g. `Coord`), no `"Schema"` suffix. `import { Coord }` = schema, `import type { Coord }` = type.
 
 ---
 
@@ -84,9 +82,8 @@ Index/barrels:
 
 ## 6) Dependency + scaffolding rules
 
-- DO NOT manually edit `package.json` for deps. Use pnpm:
-  - `pnpm add`, `pnpm remove`, `pnpm up`
-- Prefer official CLIs for setup and generators (Nest CLI, Supabase CLI, etc.).
+- Scaffold with official CLIs only; then **modify** generated files. Do not hand-create app/package configs (package.json, tsconfig, vite.config, etc.). Use `pnpm create vite`, `npx @nestjs/cli new`, `pnpm init`; for packages with no CLI, `pnpm init` then add minimal files (tsconfig, src/index.ts).
+- Use pnpm for deps: `pnpm add`, `pnpm remove`, `pnpm up`. Keep same dependency versions in sync across apps/packages. Exception: adding **workspace** packages (e.g. `@chainfall/protocol`) may be done by editing package.json (`"workspace:*"`) then `pnpm install` if pnpm add fails; do not manually set versions for published packages.
 - Prefer monorepo-wide commands (turbo/pnpm -w) over ad-hoc per-package hacks.
 
 ---
@@ -104,8 +101,11 @@ Before you output code/changes, verify:
 
 1. Did you keep the solution minimal (no extra layers)?
 2. Did you follow kebab-case paths + short names?
-3. Interfaces start with `I` and are not duplicated by value-types.
-4. No manual dependency edits (pnpm only).
+3. Interfaces start with `I`; type aliases have no `T` prefix; no duplicate value-types.
+4. Dependencies: pnpm only (or workspace edit + pnpm install if add fails).
 5. Shared logic belongs in `packages/*`, not copied across apps.
+6. Scaffolded with CLI then modified (no hand-created app/package configs).
+7. Discriminants/fixed strings: const first, use it everywhere (no magic strings).
+8. Derived types from consts live in the same file as the const.
 
 If any check fails: STOP and fix.

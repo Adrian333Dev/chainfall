@@ -20,22 +20,26 @@
 ### Fix patterns (in order of leverage)
 
 **Readiness**
+
 - Add explicit “ready” signals; wait on them.
 - Avoid broad `waitForTimeout`; prefer `waitForFunction` or DOM conditions.
 
 **Determinism**
+
 - Seed RNG, control time, and remove animation variability.
 - For canvas/WebGL: fixed timestep mode for tests.
 
 **Isolation**
+
 - Reset storage between tests.
 - Use unique test data; avoid shared accounts/state.
 - Avoid depending on test execution order.
 
 **Environment**
+
 - Lock viewport/DPR/locale/timezone.
 - Ensure fonts are installed/loaded deterministically (or use default system fonts).
 
 **Temporary guardrails**
-- Retries are acceptable only as a short-term measure with a tracked follow-up.
 
+- Retries are acceptable only as a short-term measure with a tracked follow-up.

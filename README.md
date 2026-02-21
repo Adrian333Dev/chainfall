@@ -1,135 +1,111 @@
-# Turborepo starter
+# Chainfall
 
-This Turborepo starter is maintained by the Turborepo core team.
+Chainfall is a deterministic 1v1 turn-based strategy game played on a grid with countdown “bomb tiles” that tick down and explode in chain reactions.
 
-## Using this example
+This repo is a Turborepo monorepo intended to support multiple clients (Canvas / Phaser / Three.js) against a single authoritative NestJS server.
 
-Run the following command:
+## Canonical docs (read these first)
 
-```sh
-npx create-turbo@latest
-```
+- `docs/CHAINFALL_SPEC_V1.md` — game rules (source of truth)
+- `docs/CHAINFALL_TECH_V1.md` — architecture + implementation plan
+- `.cursor/rules/*.mdc` — Cursor rules (coding conventions + structure)
+- `.cursor/skills/*` — skills (invoked explicitly in prompts)
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Repo layout (target)
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+.
+├── apps/
+│   ├── web-canvas/      # React + Canvas client (v1)
+│   ├── web-phaser/      # Phaser client (practice)
+│   ├── web-three/       # Three.js client (practice)
+│   └── server/          # NestJS (WebSocket + matchmaking + authoritative rooms)
+├── packages/
+│   ├── game-core/       # deterministic engine: (state, action) -> (state, events)
+│   ├── protocol/        # shared message schemas + types (WS contracts)
+│   └── bots/            # bot controllers (call game-core only)
+├── docs/
+│   ├── CHAINFALL_SPEC_V1.md
+│   └── CHAINFALL_TECH_V1.md
+└── plans/
+    └── milestones.md
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+## Prerequisites
 
+- Node.js (LTS recommended)
+- pnpm
+- Turbo (optional; `pnpm exec turbo` works without global install)
+
+## Setup
+
+```bash
+pnpm install
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+## Common commands
 
-### Develop
+> These will stabilize as the repo evolves. Prefer using turbo filters instead of ad-hoc scripts.
 
-To develop all apps and packages, run the following command:
+Run everything in dev (when configured):
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
+```bash
 pnpm exec turbo dev
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Run a specific app/package:
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+pnpm exec turbo dev --filter=web-canvas
+pnpm exec turbo dev --filter=server
 ```
 
-### Remote Caching
+Run tests:
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+pnpm exec turbo test
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Typecheck / lint:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+pnpm exec turbo check-types
+pnpm exec turbo lint
 ```
 
-## Useful Links
+The main client is `web-canvas`. Root `pnpm dev`, `pnpm build`, and `pnpm lint` run for Chainfall apps (web-canvas, server) and packages (game-core, protocol, bots). Package names: `@chainfall/game-core`, `@chainfall/protocol`, `@chainfall/bots`. Clients depend on `@chainfall/protocol` only; server on `@chainfall/game-core` + `@chainfall/protocol`; bots on `@chainfall/game-core`.
 
-Learn more about the power of Turborepo:
+## How we work (AI + human workflow)
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+- **Game rules live in the spec.** If rules change, update `docs/CHAINFALL_SPEC_V1.md` first.
+- **Determinism:** Game logic lives in `packages/game-core` and must be replayable.
+- **Server authoritative:** Clients are renderers + input only; server validates all actions.
+- **Skills are invoked explicitly.** (No skill is “automatic” unless you call it in the prompt.)
+- Keep changes small and readable; use git commits as your “preview and rollback.”
+
+## Milestones
+
+See: `plans/milestones.md`
+
+## Notes
+
+- This project is designed to start with a playable “Play vs Bot” loop as early as possible.
+- Later clients (Phaser/Three) should reuse the same `packages/protocol` + server state and must not re-implement game rules.
+
+## Dev Commands
+
+### Uselful Commands
+
+```bash # generate a changes context file
+{
+  echo "## SUMMARY"
+  git status --porcelain=v1
+  echo
+  echo "## DIFF"
+  git diff HEAD
+} > changes_context.txt
+```
+
+```bash # generate a tree of a directory (ignore node_modules, .git, etc.)
+tree -I 'node_modules|.git' . > tree.txt
+```

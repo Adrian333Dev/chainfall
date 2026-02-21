@@ -4,18 +4,18 @@
 
 Map commit types to changelog sections:
 
-| Commit type   | Changelog section | Notes |
-|---------------|-------------------|--------|
-| `feat`        | Added             | New feature |
-| `fix`         | Fixed             | Bug fix |
-| `perf`        | Changed           | Performance improvement |
-| `refactor`    | Changed           | Code refactor (no API change) |
-| `docs`        | Omit or Changed   | Doc-only rarely in user changelog |
-| `style`       | Omit              | Formatting only |
-| `test`        | Omit              | Tests only |
-| `chore`       | Omit              | Build/tooling unless user-facing |
-| `ci`          | Omit              | CI only |
-| Breaking footer | Breaking        | Commit body contains `BREAKING CHANGE:` |
+| Commit type     | Changelog section | Notes                                   |
+| --------------- | ----------------- | --------------------------------------- |
+| `feat`          | Added             | New feature                             |
+| `fix`           | Fixed             | Bug fix                                 |
+| `perf`          | Changed           | Performance improvement                 |
+| `refactor`      | Changed           | Code refactor (no API change)           |
+| `docs`          | Omit or Changed   | Doc-only rarely in user changelog       |
+| `style`         | Omit              | Formatting only                         |
+| `test`          | Omit              | Tests only                              |
+| `chore`         | Omit              | Build/tooling unless user-facing        |
+| `ci`            | Omit              | CI only                                 |
+| Breaking footer | Breaking          | Commit body contains `BREAKING CHANGE:` |
 
 **Scope** (e.g. `feat(auth):`) can be used in the line as **Area** for Breaking, or omitted for short entries.
 

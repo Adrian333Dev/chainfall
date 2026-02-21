@@ -1,6 +1,6 @@
 ---
 description: "Client rules for all Chainfall clients (web-canvas, web-phaser, web-three)."
-globs: "apps/web-*/**"
+globs: ["**/apps/web-*/**"]
 ---
 
 # Chainfall Clients (All Renderers)

@@ -18,10 +18,12 @@ fix(auth): correct token expiry check
 ## [1.3.0] - 2025-02-14
 
 ### Added
+
 - Auth: optional two-factor authentication
 - UI: dark mode toggle
 
 ### Fixed
+
 - API: prevent null in /users response
 - Auth: correct token expiry check
 ```
@@ -45,9 +47,11 @@ fix(log): truncate long messages
 ## [2.0.0] - 2025-02-14
 
 ### Breaking
+
 - **Config:** Config file path is now required. Pass `--config path/to/config.json` or set `CONFIG_PATH`.
 
 ### Fixed
+
 - Log: truncate long messages to avoid overflow
 ```
 
@@ -63,6 +67,7 @@ fix(log): truncate long messages
 ## [1.0.1] - 2025-02-14
 
 ### Fixed
+
 - Login redirect after successful auth
 - Typo in error message
 ```
@@ -77,6 +82,7 @@ fix(log): truncate long messages
 # Changelog
 
 ## [1.0.0] - 2025-01-01
+
 ...
 ```
 
@@ -88,11 +94,14 @@ fix(log): truncate long messages
 ## [1.1.0] - 2025-02-14
 
 ### Added
+
 - Feature X
 
 ### Fixed
+
 - Bug Y
 
 ## [1.0.0] - 2025-01-01
+
 ...
 ```

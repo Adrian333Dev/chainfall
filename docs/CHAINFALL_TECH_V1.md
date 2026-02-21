@@ -43,7 +43,6 @@ This document defines the recommended, **best-practice** technical architecture 
 ### Auth + DB
 
 - **Supabase**
-
   - Auth (JWT)
   - Postgres DB (profiles, rating, match history)
   - RLS for data safety (where appropriate)
@@ -110,7 +109,6 @@ This is the most important “game-dev concept” you’ll learn here.
 
 - Client sends **intent** only.
 - Server validates:
-
   - auth
   - it’s your match
   - correct phase/turn
@@ -132,7 +130,6 @@ Exports:
 - `newGame(config, seed, startingPlayer, cardsByPlayer)`
 - `applyAction(state, action) -> { state, events }`
 - helpers:
-
   - `getLegalActions(state)` or at minimum `getLegalPlacements(state)`
   - `assertValidState(state)` (dev-only checks)
 
@@ -142,7 +139,6 @@ Best practices:
 - No Date.now / randomness inside `applyAction`
 - All randomness comes from `seed` at `newGame`
 - 100% unit test coverage for:
-
   - queue behavior
   - chain waves
   - scoring
@@ -158,7 +154,6 @@ Best practices:
 
 - Use `zod` to validate all incoming messages server-side
 - Use versioning:
-
   - `protocolVersion: 1`
   - `stateVersion` increments per action
 
@@ -208,7 +203,6 @@ Room holds:
 
 - `matchId`
 - two controllers:
-
   - human socket / bot controller
 
 - authoritative `GameState`
@@ -227,7 +221,6 @@ Actions:
 Simple and readable v1:
 
 - FIFO queues per mode:
-
   - `casual`
   - `ranked-lite`
   - `bot`
@@ -302,13 +295,11 @@ Keep RLS simple:
 ### 8.1 UI components
 
 - Home:
-
   - Play Casual
   - Play Ranked-lite
   - Play vs Bot (difficulty)
 
 - Match screen:
-
   - board canvas
   - queue display
   - hand cards
@@ -320,7 +311,6 @@ Keep RLS simple:
 
 - Keep render pure: `draw(state, transientAnimations)`
 - Store only minimal view state:
-
   - hover cell
   - selected card
   - selected targets
@@ -329,11 +319,9 @@ Keep RLS simple:
 ### 8.3 Networking best practices
 
 - Reconnect support:
-
   - on reconnect, request snapshot
 
 - Action IDs:
-
   - client sends `clientActionId`
   - server replies accept/reject referencing it
 
@@ -360,7 +348,6 @@ When it’s bot’s turn:
 - Enumerate all legal placements
 - Simulate action with GameCore
 - Choose move maximizing:
-
   - points gained this turn
   - minus own tiles lost
   - tie-break: center preference

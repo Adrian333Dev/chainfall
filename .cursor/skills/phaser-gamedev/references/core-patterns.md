@@ -21,10 +21,10 @@ Practical Phaser 3 snippets and patterns that are helpful to copy/adapt during i
 
 ```javascript
 const config = {
-  type: Phaser.AUTO,           // WebGL with Canvas fallback
+  type: Phaser.AUTO, // WebGL with Canvas fallback
   width: 800,
   height: 600,
-  scene: [BootScene, GameScene]
+  scene: [BootScene, GameScene],
 };
 
 const game = new Phaser.Game(config);
@@ -37,33 +37,33 @@ const config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
-  parent: 'game-container',    // DOM element ID
+  parent: 'game-container', // DOM element ID
   backgroundColor: '#2d2d2d',
 
   scale: {
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH
+    autoCenter: Phaser.Scale.CENTER_BOTH,
   },
 
   physics: {
     default: 'arcade',
     arcade: {
       gravity: { y: 300 },
-      debug: false              // Enable during development
-    }
+      debug: false, // Enable during development
+    },
   },
 
-  scene: [BootScene, MenuScene, GameScene, GameOverScene]
+  scene: [BootScene, MenuScene, GameScene, GameOverScene],
 };
 ```
 
 ### Physics system choice
 
-| System | Use when |
-|---|---|
-| Arcade | Platformers, shooters, most 2D games; fast AABB collisions |
+| System | Use when                                                                  |
+| ------ | ------------------------------------------------------------------------- |
+| Arcade | Platformers, shooters, most 2D games; fast AABB collisions                |
 | Matter | Physics puzzles, ragdolls, realistic collisions; slower but more accurate |
-| None | Menu scenes, visual novels, card games |
+| None   | Menu scenes, visual novels, card games                                    |
 
 ---
 
@@ -74,7 +74,7 @@ const config = {
 ```javascript
 class GameScene extends Phaser.Scene {
   constructor() {
-    super('GameScene');        // Scene key for reference
+    super('GameScene'); // Scene key for reference
   }
 
   init(data) {
@@ -86,7 +86,8 @@ class GameScene extends Phaser.Scene {
     // Load assets before create()
     this.load.image('player', 'assets/player.png');
     this.load.spritesheet('enemy', 'assets/enemy.png', {
-      frameWidth: 32, frameHeight: 32
+      frameWidth: 32,
+      frameHeight: 32,
     });
   }
 
@@ -148,7 +149,7 @@ const player = this.add.sprite(100, 100, 'player');
 // Text
 const score = this.add.text(16, 16, 'Score: 0', {
   fontSize: '32px',
-  fill: '#fff'
+  fill: '#fff',
 });
 
 // Graphics (draw shapes)
@@ -219,10 +220,10 @@ platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 const enemies = this.physics.add.group({
   key: 'enemy',
   repeat: 5,
-  setXY: { x: 100, y: 0, stepX: 70 }
+  setXY: { x: 100, y: 0, stepX: 70 },
 });
 
-enemies.children.iterate(enemy => {
+enemies.children.iterate((enemy) => {
   enemy.setBounce(Phaser.Math.FloatBetween(0.4, 0.8));
 });
 ```
@@ -267,11 +268,13 @@ if (this.cursors.left.isDown) {
 }
 
 if (this.cursors.up.isDown && player.body.touching.down) {
-  player.setVelocityY(-330);  // Jump
+  player.setVelocityY(-330); // Jump
 }
 
 // Custom keys
-this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+this.spaceKey = this.input.keyboard.addKey(
+  Phaser.Input.Keyboard.KeyCodes.SPACE,
+);
 
 // Key events
 this.input.keyboard.on('keydown-SPACE', () => {
@@ -311,13 +314,13 @@ this.anims.create({
   key: 'walk',
   frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
   frameRate: 10,
-  repeat: -1
+  repeat: -1,
 });
 
 this.anims.create({
   key: 'jump',
   frames: [{ key: 'player', frame: 4 }],
-  frameRate: 20
+  frameRate: 20,
 });
 
 // From atlas
@@ -327,17 +330,17 @@ this.anims.create({
     prefix: 'explosion_',
     start: 1,
     end: 8,
-    zeroPad: 2
+    zeroPad: 2,
   }),
   frameRate: 16,
-  hideOnComplete: true
+  hideOnComplete: true,
 });
 ```
 
 ### Playing animations
 
 ```javascript
-sprite.anims.play('walk', true);  // ignore if already playing
+sprite.anims.play('walk', true); // ignore if already playing
 sprite.anims.play('jump');
 sprite.anims.stop();
 
@@ -394,12 +397,12 @@ class BootScene extends Phaser.Scene {
     const progressBar = this.add.graphics();
     const progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(width/2 - 160, height/2 - 25, 320, 50);
+    progressBox.fillRect(width / 2 - 160, height / 2 - 25, 320, 50);
 
     this.load.on('progress', (value) => {
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(width/2 - 150, height/2 - 15, 300 * value, 30);
+      progressBar.fillRect(width / 2 - 150, height / 2 - 15, 300 * value, 30);
     });
 
     // Load all game assets here
@@ -445,9 +448,8 @@ import { gameConfig } from './config/gameConfig';
 
 const config = {
   ...gameConfig,
-  scene: [BootScene, GameScene]
+  scene: [BootScene, GameScene],
 };
 
 new Phaser.Game(config);
 ```
-

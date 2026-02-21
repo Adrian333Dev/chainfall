@@ -159,23 +159,19 @@ While there are zero tiles:
 
 1. Mark them as exploding.
 2. Determine blast cells:
-
    - exploding tile cell
    - orthogonal neighbors
    - if Shockwave active → include diagonals
 
 3. Remove all blast tiles simultaneously
-
    - Fortified tiles survive adjacency removal
    - If a fortified tile itself is at 0, it still explodes
 
 4. Scoring:
-
    - Active player gains 1 point per enemy tile removed
    - Self-removed tiles give no points
 
 5. Chain Trigger:
-
    - Any removed tile that had countdown == 1 at removal time becomes next wave explosion
 
 6. Repeat

@@ -1,6 +1,6 @@
 ---
 name: playwright-testing
-description: "Plan, implement, and debug frontend tests: unit/integration/E2E/visual/a11y. Use for Playwright/Cypress/Vitest/Jest/RTL, flaky test triage, CI stabilization, and canvas/WebGL games (Phaser) needing deterministic input + screenshot/state assertions."
+description: 'Plan, implement, and debug frontend tests: unit/integration/E2E/visual/a11y. Use for Playwright/Cypress/Vitest/Jest/RTL, flaky test triage, CI stabilization, and canvas/WebGL games (Phaser) needing deterministic input + screenshot/state assertions.'
 ---
 
 # Frontend Testing
@@ -12,6 +12,7 @@ Unlock reliable confidence fast: enable safe refactors by choosing the right tes
 Frontend tests fail for two reasons: the product is broken, or the test is lying. Your job is to maximize signal and minimize “test is lying”.
 
 **Before writing a test, ask**:
+
 - What user risk am I covering (money, progression, auth, data loss, “can’t start” crashes)?
 - What’s the narrowest layer that catches this bug class (pure logic vs UI vs full browser)?
 - What nondeterminism exists (time, RNG, async loading, network, animations, fonts, GPU)?
@@ -19,6 +20,7 @@ Frontend tests fail for two reasons: the product is broken, or the test is lying
 - What should a failure print/screenshot so it’s diagnosable in CI?
 
 **Core principles**:
+
 1. **Test the contract, not the implementation**: assert stable user-meaningful outcomes and public seams.
 2. **Prefer determinism over retries**: make time/RNG/network controllable; remove flake at the source.
 3. **Observe like a debugger**: console errors, network failures, screenshots, and state dumps on failure.
@@ -48,6 +50,7 @@ Pick the test type by the cheapest layer that provides the needed confidence:
 ## Playwright Patterns (Especially Useful For Games)
 
 Use Playwright when you need “real browser” confidence:
+
 - Drive input via mouse/keyboard/touch; treat the canvas like the user does.
 - Add a **test seam**: expose a small, stable test API on `window` (read-only state + a few commands).
 - Prefer `waitForFunction`-style readiness over sleep; gate on “scene ready” / “assets loaded” / “first frame rendered”.
@@ -55,6 +58,7 @@ Use Playwright when you need “real browser” confidence:
 - For 9-slice / canvas UI regressions: add a dedicated UI harness scene/page and assert via targeted screenshots (see `references/phaser-canvas-testing.md`).
 
 If using the Playwright MCP tools (browser automation inside Codex), follow the same mindset:
+
 - Use `browser_console_messages` and `browser_network_requests` to catch silent failures.
 - Use `browser_evaluate` to assert `window.__TEST__` state and to set up deterministic mode.
 - Use `browser_take_screenshot` for visual assertions after determinism is enforced.
@@ -88,10 +92,12 @@ Common pitfall:
 ## Server Lifecycle Helper (Playwright E2E)
 
 When the dev server isn’t already running, use the bundled helper as a black box:
+
 - Run `python scripts/with_server.py --help` first.
 - Start one (or multiple) servers, wait for their ports, then run your test command.
 
 Example:
+
 ```bash
 python scripts/with_server.py --server "npm run dev" --port 5173 -- npm test
 ```
@@ -130,6 +136,7 @@ Better: fix readiness and determinism; use retries only as temporary guardrails.
 ## Variation Guidance (Prevent One-Size-Fits-All)
 
 Vary the approach based on:
+
 - **UI type**: DOM app vs canvas/WebGL game vs hybrid.
 - **Risk**: core revenue/progression flows get E2E first; edge UI polish gets component tests.
 - **CI constraints**: headless-only, limited GPU, slow CPUs, no audio devices.
@@ -142,10 +149,12 @@ You can make almost any frontend (including canvas/WebGL games) testable by addi
 ## Bundled Resources
 
 Read these only when needed:
+
 - `references/playwright-mcp-cheatsheet.md`: patterns for using Playwright MCP tools for assertions, waiting, and diagnostics.
 - `references/phaser-canvas-testing.md`: deterministic mode + hooks for Phaser/canvas/WebGL games.
 - `references/flake-reduction.md`: deeper flake triage and stabilization tactics.
 
 Use these scripts as black boxes (run `--help` first; don’t read source unless you must):
+
 - `scripts/with_server.py`: start/wait/stop one or more dev servers around a test command.
 - `scripts/imgdiff.py`: lightweight screenshot diff helper (requires `pip install pillow`).

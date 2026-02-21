@@ -13,7 +13,7 @@ Spritesheet loading seems simple until it breaks. A few pixels off in frame size
 ```javascript
 this.load.spritesheet('player', 'assets/player.png', {
   frameWidth: 32,
-  frameHeight: 48
+  frameHeight: 48,
 });
 ```
 
@@ -26,7 +26,7 @@ Many asset packs include spacing between frames for visual clarity in the source
 this.load.spritesheet('ui-wood-table', 'assets/wood-table.png', {
   frameWidth: 144,
   frameHeight: 144,
-  spacing: 8          // Gap between frames
+  spacing: 8, // Gap between frames
 });
 ```
 
@@ -38,20 +38,22 @@ Some spritesheets have padding around the entire image:
 this.load.spritesheet('icons', 'assets/icons.png', {
   frameWidth: 32,
   frameHeight: 32,
-  margin: 4,          // Padding around entire sheet
-  spacing: 2          // Gap between frames
+  margin: 4, // Padding around entire sheet
+  spacing: 2, // Gap between frames
 });
 ```
 
 ### Calculating Frame Dimensions
 
 **Formula**:
+
 ```
 imageWidth = (frameWidth × cols) + (spacing × (cols - 1)) + (margin × 2)
 imageHeight = (frameHeight × rows) + (spacing × (rows - 1)) + (margin × 2)
 ```
 
 **Example Calculation**:
+
 ```
 448px image with 3 columns:
   - If spacing=0: 448/3 = 149.33 (not clean - wrong assumption)
@@ -163,22 +165,22 @@ const UI_PANEL_CONFIG = {
     spacing: 0,
     cornerInset: 0.28,
     overlap: 55,
-    bgColor: 0xF5E6C8  // Beige
+    bgColor: 0xf5e6c8, // Beige
   },
   'paper-special': {
     frameSize: 106,
     spacing: 0,
     cornerInset: 0.28,
     overlap: 55,
-    bgColor: 0x4A5568  // Dark blue-gray
+    bgColor: 0x4a5568, // Dark blue-gray
   },
   'wood-table': {
     frameSize: 144,
     spacing: 8,
     cornerInset: 0.35,
     overlap: 80,
-    bgColor: 0x8B5A2B  // Brown
-  }
+    bgColor: 0x8b5a2b, // Brown
+  },
 };
 ```
 
@@ -217,6 +219,7 @@ const UI_PANEL_CONFIG = {
 **Cause**: Different assets in same pack may have different layouts
 
 **Example**:
+
 - Paper assets: 320×320, 106px frames, no spacing
 - Wood Table: 448×448, 144px frames, 8px spacing
 
@@ -229,7 +232,8 @@ const UI_PANEL_CONFIG = {
 **Cause**: The art inside each 3×3 cell is centered with lots of transparent padding. Edge frames (3/5 or 1/7) often include a wide region of interior fill, so using the full frame as the slice region paints that fill into the panel as a visible band.
 
 **Fix**: Build nine-slice panels from **trimmed slices**, not full frames:
-1. Inspect the 9 frames and find the *effective content bounds* (alpha bounding box) per row/col.
+
+1. Inspect the 9 frames and find the _effective content bounds_ (alpha bounding box) per row/col.
 2. Crop each tile to that effective region (removing padded interior space).
 3. Composite/cache a single texture for the target panel size (canvas or RenderTexture).
 4. Use a small overlap (≈1px) + disable smoothing to avoid seam lines.
@@ -241,6 +245,7 @@ const UI_PANEL_CONFIG = {
 **Cause**: The source image contains multiple separated slices (e.g., left/center/right) with transparent gutters between them. Scaling the whole image scales the gutters too.
 
 **Fix**: Treat it as a multi-slice (often a 3-slice), and stitch a cached texture at the target size:
+
 - crop/draw the left cap, center band, right cap separately
 - stretch only the center band to fill the requested width
 - use ~1px seam overlap + disable smoothing to hide hairline seams
@@ -266,9 +271,39 @@ function getOrCreate3Slice(scene, sourceKey, width, height, slices, row = 0) {
   const rightW = Math.max(1, Math.round(slices.right.w * scaleY));
   const centerW = Math.max(1, width - leftW - rightW);
 
-  ctx.drawImage(src, slices.left.x, sy, slices.left.w, slices.frameH, 0, 0, leftW + seam, height);
-  ctx.drawImage(src, slices.center.x, sy, slices.center.w, slices.frameH, leftW - seam, 0, centerW + seam * 2, height);
-  ctx.drawImage(src, slices.right.x, sy, slices.right.w, slices.frameH, leftW + centerW - seam, 0, rightW + seam, height);
+  ctx.drawImage(
+    src,
+    slices.left.x,
+    sy,
+    slices.left.w,
+    slices.frameH,
+    0,
+    0,
+    leftW + seam,
+    height,
+  );
+  ctx.drawImage(
+    src,
+    slices.center.x,
+    sy,
+    slices.center.w,
+    slices.frameH,
+    leftW - seam,
+    0,
+    centerW + seam * 2,
+    height,
+  );
+  ctx.drawImage(
+    src,
+    slices.right.x,
+    sy,
+    slices.right.w,
+    slices.frameH,
+    leftW + centerW - seam,
+    0,
+    rightW + seam,
+    height,
+  );
 
   scene.textures.addCanvas(texKey, canvas);
   return texKey;
@@ -282,6 +317,7 @@ function getOrCreate3Slice(scene, sourceKey, width, height, slices, row = 0) {
 **Cause**: Different animations of the same character often have different frame sizes to accommodate varying poses. A run cycle needs wider frames for the stride; an attack needs extra width for the weapon swing.
 
 **Example**:
+
 ```
 Boss Character Spritesheets:
 - Idle:   64x80 pixels per frame (compact standing pose)
@@ -292,6 +328,7 @@ Boss Character Spritesheets:
 **Fix**: Measure EACH animation spritesheet independently. Never assume frame width transfers between animations of the same character.
 
 **How to verify**:
+
 ```
 For each spritesheet:
   1. Open image, note total width

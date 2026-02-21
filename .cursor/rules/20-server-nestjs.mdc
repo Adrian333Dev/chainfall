@@ -1,6 +1,6 @@
 ---
 description: "Server rules for Chainfall: NestJS structure, validation, security, websockets, server-authoritative gameplay."
-globs: "apps/server/**"
+globs: ["**/apps/server/**"]
 ---
 
 # Chainfall Server (NestJS)

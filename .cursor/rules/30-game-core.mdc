@@ -1,6 +1,6 @@
 ---
 description: "Game-core rules: deterministic, pure logic, replayable state transitions. No IO."
-globs: "packages/game-core/**"
+globs: ["**/packages/game-core/**"]
 ---
 
 # Chainfall Game Core (Deterministic Engine)

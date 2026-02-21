@@ -1,0 +1,643 @@
+{
+  "name": "end-mercy",
+  "seed": 100,
+  "startingPlayer": "blue",
+  "config": {
+    "mercyRule": true,
+    "mercyLead": 2
+  },
+  "actions": [
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 0,
+          "col": 0
+        }
+      }
+    },
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 0,
+          "col": 1
+        }
+      }
+    },
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 1,
+          "col": 0
+        }
+      }
+    },
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 1,
+          "col": 1
+        }
+      }
+    },
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 2,
+          "col": 0
+        }
+      }
+    },
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 2,
+          "col": 1
+        }
+      }
+    },
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 3,
+          "col": 0
+        }
+      }
+    },
+    {
+      "type": "take-turn",
+      "placement": {
+        "at": {
+          "row": 3,
+          "col": 1
+        }
+      }
+    }
+  ],
+  "expected": {
+    "finalState": {
+      "protocolVersion": 1,
+      "version": 8,
+      "config": {
+        "boardSize": 6,
+        "queueSize": 8,
+        "cardsEnabled": true,
+        "maxCardsPerTurn": 1,
+        "maxCardsPerGame": 4,
+        "mercyRule": true,
+        "mercyLead": 2,
+        "diagonalExplosions": false
+      },
+      "seed": 100,
+      "turn": 9,
+      "activePlayer": "blue",
+      "scores": {
+        "blue": 1,
+        "red": 2
+      },
+      "bag": [
+        3,
+        3,
+        4,
+        3,
+        2,
+        4,
+        2,
+        2,
+        4,
+        3,
+        2,
+        4,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1
+      ],
+      "queue": [
+        2,
+        2,
+        1,
+        3,
+        3,
+        4,
+        1,
+        4
+      ],
+      "board": [
+        [
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          }
+        ],
+        [
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          }
+        ],
+        [
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          }
+        ],
+        [
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          }
+        ],
+        [
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          }
+        ],
+        [
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          },
+          {
+            "type": "empty"
+          }
+        ]
+      ],
+      "nextIds": {
+        "tile": 9,
+        "wall": 1
+      },
+      "lastPlacementBy": "red",
+      "turnEffects": {
+        "shockwave": false,
+        "fortifiedTileIds": []
+      },
+      "cards": {
+        "enabled": true,
+        "cardPlayedThisTurn": false,
+        "playedCount": {
+          "blue": 0,
+          "red": 0
+        },
+        "used": {
+          "blue": {},
+          "red": {}
+        }
+      },
+      "status": {
+        "type": "in-progress"
+      }
+    },
+    "eventsByAction": [
+      [
+        {
+          "type": "turn-started",
+          "turn": 1,
+          "activePlayer": "blue"
+        },
+        {
+          "type": "tile-placed",
+          "player": "blue",
+          "at": {
+            "row": 0,
+            "col": 0
+          },
+          "tile": {
+            "id": 1,
+            "owner": "blue",
+            "countdown": 4
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 1,
+              "from": 4,
+              "to": 3
+            }
+          ],
+          "walls": []
+        }
+      ],
+      [
+        {
+          "type": "turn-started",
+          "turn": 2,
+          "activePlayer": "red"
+        },
+        {
+          "type": "tile-placed",
+          "player": "red",
+          "at": {
+            "row": 0,
+            "col": 1
+          },
+          "tile": {
+            "id": 2,
+            "owner": "red",
+            "countdown": 1
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 1,
+              "from": 3,
+              "to": 2
+            },
+            {
+              "id": 2,
+              "from": 1,
+              "to": 0
+            }
+          ],
+          "walls": []
+        },
+        {
+          "type": "wave-resolved",
+          "wave": 1,
+          "explodingTileIds": [
+            2
+          ],
+          "removedTileIds": [
+            1,
+            2
+          ],
+          "triggeredTileIds": [],
+          "pointsGained": 1
+        },
+        {
+          "type": "score-changed",
+          "player": "red",
+          "from": 0,
+          "to": 1,
+          "delta": 1
+        }
+      ],
+      [
+        {
+          "type": "turn-started",
+          "turn": 3,
+          "activePlayer": "blue"
+        },
+        {
+          "type": "tile-placed",
+          "player": "blue",
+          "at": {
+            "row": 1,
+            "col": 0
+          },
+          "tile": {
+            "id": 3,
+            "owner": "blue",
+            "countdown": 3
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 3,
+              "from": 3,
+              "to": 2
+            }
+          ],
+          "walls": []
+        }
+      ],
+      [
+        {
+          "type": "turn-started",
+          "turn": 4,
+          "activePlayer": "red"
+        },
+        {
+          "type": "tile-placed",
+          "player": "red",
+          "at": {
+            "row": 1,
+            "col": 1
+          },
+          "tile": {
+            "id": 4,
+            "owner": "red",
+            "countdown": 2
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 3,
+              "from": 2,
+              "to": 1
+            },
+            {
+              "id": 4,
+              "from": 2,
+              "to": 1
+            }
+          ],
+          "walls": []
+        }
+      ],
+      [
+        {
+          "type": "turn-started",
+          "turn": 5,
+          "activePlayer": "blue"
+        },
+        {
+          "type": "tile-placed",
+          "player": "blue",
+          "at": {
+            "row": 2,
+            "col": 0
+          },
+          "tile": {
+            "id": 5,
+            "owner": "blue",
+            "countdown": 3
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 3,
+              "from": 1,
+              "to": 0
+            },
+            {
+              "id": 4,
+              "from": 1,
+              "to": 0
+            },
+            {
+              "id": 5,
+              "from": 3,
+              "to": 2
+            }
+          ],
+          "walls": []
+        },
+        {
+          "type": "wave-resolved",
+          "wave": 1,
+          "explodingTileIds": [
+            3,
+            4
+          ],
+          "removedTileIds": [
+            3,
+            4,
+            5
+          ],
+          "triggeredTileIds": [],
+          "pointsGained": 1
+        },
+        {
+          "type": "score-changed",
+          "player": "blue",
+          "from": 0,
+          "to": 1,
+          "delta": 1
+        }
+      ],
+      [
+        {
+          "type": "turn-started",
+          "turn": 6,
+          "activePlayer": "red"
+        },
+        {
+          "type": "tile-placed",
+          "player": "red",
+          "at": {
+            "row": 2,
+            "col": 1
+          },
+          "tile": {
+            "id": 6,
+            "owner": "red",
+            "countdown": 3
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 6,
+              "from": 3,
+              "to": 2
+            }
+          ],
+          "walls": []
+        }
+      ],
+      [
+        {
+          "type": "turn-started",
+          "turn": 7,
+          "activePlayer": "blue"
+        },
+        {
+          "type": "tile-placed",
+          "player": "blue",
+          "at": {
+            "row": 3,
+            "col": 0
+          },
+          "tile": {
+            "id": 7,
+            "owner": "blue",
+            "countdown": 4
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 6,
+              "from": 2,
+              "to": 1
+            },
+            {
+              "id": 7,
+              "from": 4,
+              "to": 3
+            }
+          ],
+          "walls": []
+        }
+      ],
+      [
+        {
+          "type": "turn-started",
+          "turn": 8,
+          "activePlayer": "red"
+        },
+        {
+          "type": "tile-placed",
+          "player": "red",
+          "at": {
+            "row": 3,
+            "col": 1
+          },
+          "tile": {
+            "id": 8,
+            "owner": "red",
+            "countdown": 2
+          }
+        },
+        {
+          "type": "tick-resolved",
+          "tiles": [
+            {
+              "id": 6,
+              "from": 1,
+              "to": 0
+            },
+            {
+              "id": 7,
+              "from": 3,
+              "to": 2
+            },
+            {
+              "id": 8,
+              "from": 2,
+              "to": 1
+            }
+          ],
+          "walls": []
+        },
+        {
+          "type": "wave-resolved",
+          "wave": 1,
+          "explodingTileIds": [
+            6
+          ],
+          "removedTileIds": [
+            6,
+            8
+          ],
+          "triggeredTileIds": [
+            8
+          ],
+          "pointsGained": 0
+        },
+        {
+          "type": "wave-resolved",
+          "wave": 2,
+          "explodingTileIds": [],
+          "removedTileIds": [
+            7
+          ],
+          "triggeredTileIds": [],
+          "pointsGained": 1
+        },
+        {
+          "type": "score-changed",
+          "player": "red",
+          "from": 1,
+          "to": 2,
+          "delta": 1
+        }
+      ]
+    ]
+  }
+}

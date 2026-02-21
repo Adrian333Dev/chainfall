@@ -1,6 +1,6 @@
 ---
 description: "React + Canvas specific rules for Chainfall."
-globs: "apps/web-canvas/**"
+globs: ["**/apps/web-canvas/**"]
 ---
 
 # Web Canvas Client (React + Canvas)

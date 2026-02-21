@@ -6,7 +6,7 @@ This reference is for using the Playwright MCP tools during frontend testing tas
 
 - Use MCP to reproduce a user flow and collect evidence: console, network, screenshots, and state.
 - Prefer explicit readiness over time-based waits.
-- Treat *any* console error (or failed asset request) as a product failure unless explicitly allowed.
+- Treat _any_ console error (or failed asset request) as a product failure unless explicitly allowed.
 
 ### High-signal tool patterns
 

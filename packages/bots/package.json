@@ -1,0 +1,18 @@
+{
+  "name": "@chainfall/bots",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@chainfall/eslint-config": "workspace:^",
+    "@chainfall/typescript-config": "workspace:^",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3"
+  }
+}

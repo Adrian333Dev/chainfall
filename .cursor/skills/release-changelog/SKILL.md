@@ -70,15 +70,15 @@ Review output and note breaking changes, features, and fixes.
 
 Group items into:
 
-| Section   | Use for |
-|----------|---------|
-| **Breaking** | Breaking API or behavior changes |
-| **Added**    | New features |
-| **Changed**  | Changes in existing behavior (non-breaking) |
-| **Fixed**    | Bug fixes |
-| **Security** | Security-related changes |
-| **Deprecated** | Deprecations (optional section) |
-| **Removed**  | Removed features (optional) |
+| Section        | Use for                                     |
+| -------------- | ------------------------------------------- |
+| **Breaking**   | Breaking API or behavior changes            |
+| **Added**      | New features                                |
+| **Changed**    | Changes in existing behavior (non-breaking) |
+| **Fixed**      | Bug fixes                                   |
+| **Security**   | Security-related changes                    |
+| **Deprecated** | Deprecations (optional section)             |
+| **Removed**    | Removed features (optional)                 |
 
 - One line per change; start with a verb (Add, Fix, Change, Remove).
 - Strip commit hash and scope from the line shown to users; keep the message clear.
@@ -94,18 +94,23 @@ Use this structure for the release block:
 ## [Version] - YYYY-MM-DD
 
 ### Breaking
+
 - **Area:** Description of breaking change and migration hint if applicable.
 
 ### Added
+
 - Feature or capability in one short line.
 
 ### Changed
+
 - What changed and why (brief).
 
 ### Fixed
+
 - Bug or issue that was fixed.
 
 ### Security
+
 - Security fix or hardening (if any).
 ```
 

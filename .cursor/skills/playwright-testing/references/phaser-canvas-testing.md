@@ -3,6 +3,7 @@
 ### Why canvas/WebGL tests get flaky
 
 Common nondeterminism sources:
+
 - variable frame times (CPU load, headless rendering)
 - time-based movement/physics without fixed timestep
 - RNG for loot/spawns/AI
@@ -14,6 +15,7 @@ The fix is not “more retries”; it’s **deterministic mode + explicit readin
 ### Deterministic mode (recommended pattern)
 
 When `?test=1` (or a build-time flag) is enabled:
+
 - seed RNG from a known value (and expose it)
 - freeze or control time (fixed timestep) for simulation-sensitive assertions
 - disable camera shake, screen flash, particles, and audio if they introduce nondeterminism
@@ -29,22 +31,25 @@ Expose a stable API (avoid leaking internal Phaser objects unless wrapped):
   - first scene created
   - first render tick occurred (optional but helpful for screenshot timing)
 
-If you need to expose entities, expose *IDs + essential fields* (x/y/hp/state), not sprite instances.
+If you need to expose entities, expose _IDs + essential fields_ (x/y/hp/state), not sprite instances.
 
 ### What to assert (avoid brittle assertions)
 
 Prefer invariants that match player-visible behavior:
+
 - “player can start” (scene key, UI state)
 - “pressing attack spawns hitbox and reduces enemy HP”
 - “collecting coin increments score”
 
 Avoid:
+
 - raw pixel-perfect sprite positions unless you fixed dt and RNG
 - asserting on ordering of internally iterated arrays/maps
 
 ### Screenshot testing: make it reliable
 
 Before comparing screenshots:
+
 - fix viewport size + device scale factor
 - fix RNG seed + fixed dt
 - wait on `__TEST__.ready` and optionally a `__TEST__.frameCount >= N`
@@ -59,10 +64,11 @@ Canvas UI bugs (9-slice seams, padded-frame “side bars”, segmented ribbons, 
 ### Recommended harness pattern
 
 Create a dedicated test page/scene (e.g., `test.html`) that:
+
 - loads only UI assets
 - renders each element on **multiple backdrops** (dark UI background + “world green” + paper/wood) to expose transparency problems
 - renders **raw frames** and **assembled output** side-by-side
-- supports keyboard toggles (`1..N`) *and* a programmatic seam via `window.__TEST__.commands.showTest(n)`
+- supports keyboard toggles (`1..N`) _and_ a programmatic seam via `window.__TEST__.commands.showTest(n)`
 
 This is especially high-signal for 9-slice work because the failure mode is visual (gaps/bands), and the correct output is hard to assert via internal state alone.
 
@@ -70,7 +76,7 @@ This is especially high-signal for 9-slice work because the failure mode is visu
 
 - **Raw frames**: all 9 frames of a 3×3 sheet (catches loader `frameWidth/spacing` errors)
 - **Assembled panel**: several target sizes (catches trim/overlap math issues)
-- **Ribbons/banners**: show “raw crop+scale” *and* “stitched multi-slice” (catches internal transparent gutters)
+- **Ribbons/banners**: show “raw crop+scale” _and_ “stitched multi-slice” (catches internal transparent gutters)
 - **Bars**: base + track + fill (cropped) over a “world” backdrop (catches transparent-window issues)
 
 ### Playwright screenshot workflow (practical)
